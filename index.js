@@ -2,7 +2,12 @@
 // import axios from "axios";
 
 // The breed selection input element.
-const breedSelect = document.getElementById("breedSelect");
+
+
+
+
+const breedSelect = document.querySelector("#breedSelect");
+
 // The information section div element.
 const infoDump = document.getElementById("infoDump");
 // The progress bar div element.
@@ -11,9 +16,25 @@ const progressBar = document.getElementById("progressBar");
 const getFavouritesBtn = document.getElementById("getFavouritesBtn");
 
 // Step 0: Store your API key here for reference and easy access.
-const key = `live_swrCoDd3pMK55rPu73sddFEIMJA0tFka67FcC0BAxcCIgfBvzsn5JW3eXe2Cxf06`;
+const key = `live_N544Y2FQYikguEIiktiqTdX3oL9S1xpjRkmWQfS4u3GqoqwCAHREgsZFJYFuL5oO`;
 
 
+
+// async function initialLoad(key) {
+
+//   const response=fetch(key)
+//   console.log(response);
+  
+// }
+
+/**
+ * 1. Create an async function "initialLoad" that does the following:
+ * - Retrieve a list of breeds from the cat API using fetch().
+ * - Create new <options> for each of these breeds, and append them to breedSelect.
+ *  - Each option should have a value attribute equal to the id of the breed.
+ *  - Each option should display text equal to the name of the breed.
+ * This function should execute immediately.
+ */
 
 const initialLoad=async() => {
  
@@ -25,9 +46,15 @@ const initialLoad=async() => {
 
    console.log(data);
     data.forEach(e => {
-      console.log(e.name);
-      
-    });
+      // console.log(e.name);
+      const option=document.createElement('option')
+       option.textContent=e.name
+       breedSelect.appendChild(option)
+      //  console.log(option);
+  
+      });
+
+  
 
 }
 
@@ -35,24 +62,6 @@ initialLoad();
 
 
 
-
-
-
-
-// async function initialLoad(key) {
-
-//   const response=fetch(key)
-//   console.log(response);
-  
-// }
-/**
- * 1. Create an async function "initialLoad" that does the following:
- * - Retrieve a list of breeds from the cat API using fetch().
- * - Create new <options> for each of these breeds, and append them to breedSelect.
- *  - Each option should have a value attribute equal to the id of the breed.
- *  - Each option should display text equal to the name of the breed.
- * This function should execute immediately.
- */
 
 /**
  * 2. Create an event handler for breedSelect that does the following:
