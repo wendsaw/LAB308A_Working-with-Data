@@ -1,6 +1,8 @@
 // import * as Carousel from "./Carousel.js";
 // import axios from "axios";
 
+// const { data } = require("jquery");
+
 // The breed selection input element.
 
 const breedSelect = document.querySelector("#breedSelect");
@@ -34,7 +36,7 @@ const initialLoad=async() => {
   const response = await fetch(base+query);
    const data= await response.json();
 
-   console.log(data);
+  //  console.log(data);
     data.forEach(e => {
       // console.log(e.name);
       const option=document.createElement('option')
@@ -44,10 +46,10 @@ const initialLoad=async() => {
   
       });
 
-
+return data
 }
 
-initialLoad();
+// initialLoad();
 /**
  * 2. Create an event handler for breedSelect that does the following:
  * - Retrieve information on the selected breed from the cat API using fetch().
@@ -73,21 +75,26 @@ const getImage=async function (id) {
   image=await breedImage.json()
 
   console.log(image);
-  
+  return image;
 
 }
 
-getImage('beng');
+initialLoad()
+ .then(data =>{
+  return getImage(data[0].id)})
+  .catch(err => {
+    console.log(err)});
+    
+  
 
-
-breedSelect.addEventListener('submit',e=>{
-  e.preventDefault();
+// breedSelect.addEventListener('submit',e=>{
+//   e.preventDefault();
 
   
-  // const city=cityForm.city.value.trim();
-  // cityForm.reset();
+//   // const city=cityForm.city.value.trim();
+//   // cityForm.reset();
 
-});
+// });
 
 
 
