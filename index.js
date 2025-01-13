@@ -3,9 +3,6 @@
 
 // The breed selection input element.
 
-
-
-
 const breedSelect = document.querySelector("#breedSelect");
 
 // The information section div element.
@@ -19,13 +16,6 @@ const getFavouritesBtn = document.getElementById("getFavouritesBtn");
 const key = `live_N544Y2FQYikguEIiktiqTdX3oL9S1xpjRkmWQfS4u3GqoqwCAHREgsZFJYFuL5oO`;
 
 
-
-// async function initialLoad(key) {
-
-//   const response=fetch(key)
-//   console.log(response);
-  
-// }
 
 /**
  * 1. Create an async function "initialLoad" that does the following:
@@ -54,15 +44,10 @@ const initialLoad=async() => {
   
       });
 
-  
 
 }
 
 initialLoad();
-
-
-
-
 /**
  * 2. Create an event handler for breedSelect that does the following:
  * - Retrieve information on the selected breed from the cat API using fetch().
@@ -77,6 +62,35 @@ initialLoad();
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
+
+const getImage=async function (id) {
+
+  const base='https://api.thecatapi.com/v1/images/search?breed_ids';
+  const query=`${id}?apikey=${key}`;
+
+
+  breedImage=await fetch( base+query);
+  image=await breedImage.json()
+
+  console.log(image);
+  
+
+}
+
+getImage('beng');
+
+
+breedSelect.addEventListener('submit',e=>{
+  e.preventDefault();
+
+  
+  // const city=cityForm.city.value.trim();
+  // cityForm.reset();
+
+});
+
+
+
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
