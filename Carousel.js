@@ -12,8 +12,8 @@ export function createCarouselItem(imgSrc, imgAlt, imgId) {
 
   const favBtn = clone.querySelector(".favourite-button");
   favBtn.addEventListener("click", (e) => {
-    e.target;
-   console.log('hello');
+    
+   
     favourite(imgId);
 
   });

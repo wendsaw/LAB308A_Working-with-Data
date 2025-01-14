@@ -18077,8 +18077,6 @@ function createCarouselItem(imgSrc, imgAlt, imgId) {
   img.alt = imgAlt;
   var favBtn = clone.querySelector(".favourite-button");
   favBtn.addEventListener("click", function (e) {
-    e.target;
-    console.log('hello');
     (0, _index.favourite)(imgId);
   });
   return clone;
@@ -18355,7 +18353,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51235" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57295" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
