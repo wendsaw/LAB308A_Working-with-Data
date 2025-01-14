@@ -21,41 +21,28 @@ const key = `live_N544Y2FQYikguEIiktiqTdX3oL9S1xpjRkmWQfS4u3GqoqwCAHREgsZFJYFuL5
  *  - Each option should display text equal to the name of the breed.
  * This function should execute immediately.
  */
-
+const base = 'https://api.thecatapi.com/v1/breeds'
+const query = `?apikey=${key}`
 const initialLoad = async () => {
 
-  const base = 'https://api.thecatapi.com/v1/breeds'
-  const query = `?apikey=${key}`
-   
+
+
     axios.get(base + query)
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((error) => {
-      console.log(error);
-      
-    })
+        .then((response) => {
+            console.log(response);
+            console.log(response.data[0].id);
+        })
+        .catch((error) => {
+            console.log(error);
+
+        })
 
     //  console.log(data);
 
-    return 
+    return
 }
 
 initialLoad();
-
-// initialLoad().then(data => {
-//     data.forEach(e => {
-//         // console.log(e.name);
-//         const option = document.createElement('option')
-//         option.setAttribute('class', 'breedName')
-//         option.textContent = e.name
-//         breedSelect.appendChild(option)
-//         //  console.log(option);
-
-//     });
-
-// })
-
 
 /**
  * 2. Create an event handler for breedSelect that does the following:
@@ -90,25 +77,27 @@ const favourite = async function (id) {
 breedSelect.addEventListener('change', e => {
     e.target;
     console.log(e.target.value);
-    initialLoad().then(data => {
-        data.forEach(b => {
+    initialLoad().then(response => {
+        
+        axios.get(base + query)
+            .then((response) => {
+                for (let i= 0; i < 66; i++) {
+             if (response.data[i].name=== e.target.value) {
+                 console.log(response.data[i].name);
+                 console.log(response.data[i].id);
+                 }
+                     }
+                
+            })
+            .catch((error) => {
+                console.log(error);
 
-            if (b.name === e.target.value) {
-                console.log(b.id);
-                favourite(b.id).then(image => {
-                    console.log(image);
-
-                })
-
-            }
-
-        })
-
+            })
+        
 
     })
 
 });
-
 
 
 /**

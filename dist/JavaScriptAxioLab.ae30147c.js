@@ -18363,24 +18363,23 @@ var key = "live_N544Y2FQYikguEIiktiqTdX3oL9S1xpjRkmWQfS4u3GqoqwCAHREgsZFJYFuL5oO
  *  - Each option should display text equal to the name of the breed.
  * This function should execute immediately.
  */
-
+var base = 'https://api.thecatapi.com/v1/breeds';
+var query = "?apikey=".concat(key);
 var initialLoad = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-    var base, query;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          base = 'https://api.thecatapi.com/v1/breeds';
-          query = "?apikey=".concat(key);
           axios.get(base + query).then(function (response) {
             console.log(response);
+            console.log(response.data[0].id);
           }).catch(function (error) {
             console.log(error);
           });
 
           //  console.log(data);
           return _context.abrupt("return");
-        case 4:
+        case 2:
         case "end":
           return _context.stop();
       }
@@ -18391,19 +18390,6 @@ var initialLoad = /*#__PURE__*/function () {
   };
 }();
 initialLoad();
-
-// initialLoad().then(data => {
-//     data.forEach(e => {
-//         // console.log(e.name);
-//         const option = document.createElement('option')
-//         option.setAttribute('class', 'breedName')
-//         option.textContent = e.name
-//         breedSelect.appendChild(option)
-//         //  console.log(option);
-
-//     });
-
-// })
 
 /**
  * 2. Create an event handler for breedSelect that does the following:
@@ -18453,14 +18439,16 @@ var favourite = /*#__PURE__*/function () {
 breedSelect.addEventListener('change', function (e) {
   e.target;
   console.log(e.target.value);
-  initialLoad().then(function (data) {
-    data.forEach(function (b) {
-      if (b.name === e.target.value) {
-        console.log(b.id);
-        favourite(b.id).then(function (image) {
-          console.log(image);
-        });
+  initialLoad().then(function (response) {
+    axios.get(base + query).then(function (response) {
+      for (var i = 0; i < 66; i++) {
+        if (response.data[i].name === e.target.value) {
+          console.log(response.data[i].name);
+          console.log(response.data[i].id);
+        }
       }
+    }).catch(function (error) {
+      console.log(error);
     });
   });
 });
@@ -18562,7 +18550,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56016" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64557" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
