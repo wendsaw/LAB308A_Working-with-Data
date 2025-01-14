@@ -18372,7 +18372,6 @@ var initialLoad = /*#__PURE__*/function () {
         case 0:
           axios.get(base + query).then(function (response) {
             console.log(response);
-            console.log(response.data[0].id);
           }).catch(function (error) {
             console.log(error);
           });
@@ -18442,8 +18441,9 @@ breedSelect.addEventListener('change', function (e) {
   initialLoad().then(function (response) {
     axios.get(base + query).then(function (response) {
       for (var i = 0; i < 66; i++) {
-        if (response.data[i].name === e.target.value) {
+        if (response.data[i].name == e.target.value) {
           console.log(response.data[i].name);
+          console.log(e.target.value);
           favourite(response.data[i].id).then(function (image) {
             console.log(image);
           });
@@ -18552,7 +18552,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60358" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62894" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -25,15 +25,12 @@ const base = 'https://api.thecatapi.com/v1/breeds'
 const query = `?apikey=${key}`
 const initialLoad = async () => {
 
-
-
     axios.get(base + query)
         .then((response) => {
-            console.log(response);
-            console.log(response.data[0].id);
+            console.log(response)
         })
         .catch((error) => {
-            console.log(error);
+            console.log(error)
 
         })
 
@@ -63,11 +60,8 @@ const favourite = async function (id) {
 
     const base = 'https://api.thecatapi.com/v1/images/search?breed_ids';
     const query = `${id}?api_key=$${key}`;
-
     const breedImage = await fetch(base + query);
-
     const image = await breedImage.json()
-
     return image;
 
 }
@@ -77,13 +71,16 @@ const favourite = async function (id) {
 breedSelect.addEventListener('change', e => {
     e.target;
     console.log(e.target.value);
+
     initialLoad().then(response => {
         
         axios.get(base + query)
             .then((response) => {
                 for (let i= 0; i < 66; i++) {
-             if (response.data[i].name=== e.target.value) {
+             if (response.data[i].name==e.target.value) {
                  console.log(response.data[i].name);
+                 console.log(e.target.value);
+
                  favourite(response.data[i].id).then(image => {
                     console.log(image);
                   })
