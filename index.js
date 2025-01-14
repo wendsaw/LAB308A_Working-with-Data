@@ -1,12 +1,8 @@
-// import * as Carousel from "./Carousel.js";
+import * as Carousel from "./Carousel.js";
 // import axios from "axios";
-
-// const { data } = require("jquery");
-
+const { data } = require("jquery");
 // The breed selection input element.
-
 const breedSelect = document.querySelector("#breedSelect");
-
 // The information section div element.
 const infoDump = document.getElementById("infoDump");
 // The progress bar div element.
@@ -17,8 +13,6 @@ const getFavouritesBtn = document.getElementById("getFavouritesBtn");
 // Step 0: Store your API key here for reference and easy access.
 const key = `live_N544Y2FQYikguEIiktiqTdX3oL9S1xpjRkmWQfS4u3GqoqwCAHREgsZFJYFuL5oO`;
 
-
-
 /**
  * 1. Create an async function "initialLoad" that does the following:
  * - Retrieve a list of breeds from the cat API using fetch().
@@ -28,28 +22,36 @@ const key = `live_N544Y2FQYikguEIiktiqTdX3oL9S1xpjRkmWQfS4u3GqoqwCAHREgsZFJYFuL5
  * This function should execute immediately.
  */
 
-const initialLoad=async() => {
- 
-  const base='https://api.thecatapi.com/v1/breeds'
-  const query=`?apikey=${key}`
+const initialLoad = async () => {
 
-  const response = await fetch(base+query);
-   const data= await response.json();
+  const base = 'https://api.thecatapi.com/v1/breeds'
+  const query = `?apikey=${key}`
+
+  const response = await fetch(base + query);
+  const data = await response.json();
+
 
   //  console.log(data);
-    data.forEach(e => {
-      // console.log(e.name);
-      const option=document.createElement('option')
-       option.textContent=e.name
-       breedSelect.appendChild(option)
-      //  console.log(option);
-  
-      });
+   
 
-return data
+  return data
 }
 
-// initialLoad();
+initialLoad().then(data => {
+  data.forEach(e => {
+    // console.log(e.name);
+    const option = document.createElement('option')
+    option.setAttribute('class', 'breedName')
+    option.textContent = e.name
+    breedSelect.appendChild(option)
+    //  console.log(option);
+
+  });
+
+})
+
+
+
 /**
  * 2. Create an event handler for breedSelect that does the following:
  * - Retrieve information on the selected breed from the cat API using fetch().
@@ -65,36 +67,48 @@ return data
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
 
-const getImage=async function (id) {
+const favourite = async function (id='beng') {
+ 
+  const base = 'https://api.thecatapi.com/v1/images/search?breed_ids';
+  const query = `${id}?api_key=$${key}`;
 
-  const base='https://api.thecatapi.com/v1/images/search?breed_ids';
-  const query=`${id}?apikey=${key}`;
+ const breedImage = await fetch(base + query);
 
+ const image = await breedImage.json()
+  
 
-  breedImage=await fetch( base+query);
-  image=await breedImage.json()
-
-  console.log(image);
   return image;
 
 }
 
-initialLoad()
- .then(data =>{
-  return getImage(data[0].id)})
-  .catch(err => {
-    console.log(err)});
+const image=favourite();
+console.log(image);
+
+
+
+breedSelect.addEventListener('change', e => {
+  e.target;
+  console.log(e.target.value);
+  initialLoad().then(data=>{
     
-  
+    data.forEach(b=>{
 
-// breedSelect.addEventListener('submit',e=>{
-//   e.preventDefault();
+      if (b.name===e.target.value){
+        console.log(b.id);
+        favourite(b.id).then(image=>{
+          console.log(image[0].url);
 
-  
-//   // const city=cityForm.city.value.trim();
-//   // cityForm.reset();
+        })
+      
+      }
+      
+    })
 
-// });
+    
+
+  })
+
+});
 
 
 
@@ -154,7 +168,7 @@ initialLoad()
 //   // your code here
 // }
 
-/**
+/**nru
  * 9. Test your favourite() function by creating a getFavourites() function.
  * - Use Axios to get all of your favourites from the cat API.
  * - Clear the carousel and display your favourites when the button is clicked.

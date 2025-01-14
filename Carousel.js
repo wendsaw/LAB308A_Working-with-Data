@@ -1,5 +1,6 @@
 import * as bootstrap from "bootstrap";
 import { favourite } from "./index.js";
+import { error } from "jquery";
 
 export function createCarouselItem(imgSrc, imgAlt, imgId) {
   const template = document.querySelector("#carouselItemTemplate");
@@ -11,12 +12,13 @@ export function createCarouselItem(imgSrc, imgAlt, imgId) {
 
   const favBtn = clone.querySelector(".favourite-button");
   favBtn.addEventListener("click", () => {
+
     favourite(imgId);
+  
   });
 
   return clone;
 }
-
 export function clear() {
   const carousel = document.querySelector("#carouselInner");
   while (carousel.firstChild) {
