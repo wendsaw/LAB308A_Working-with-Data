@@ -18076,7 +18076,9 @@ function createCarouselItem(imgSrc, imgAlt, imgId) {
   img.src = imgSrc;
   img.alt = imgAlt;
   var favBtn = clone.querySelector(".favourite-button");
-  favBtn.addEventListener("click", function () {
+  favBtn.addEventListener("click", function (e) {
+    e.target;
+    console.log('hello');
     (0, _index.favourite)(imgId);
   });
   return clone;
@@ -18212,40 +18214,35 @@ initialLoad().then(function (data) {
  */
 
 var favourite = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-    var id,
-      base,
-      query,
-      breedImage,
-      image,
-      _args2 = arguments;
+  var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(id) {
+    var base, query, breedImage, image;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          id = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 'beng';
           base = 'https://api.thecatapi.com/v1/images/search?breed_ids';
           query = "".concat(id, "?api_key=$").concat(key);
-          _context2.next = 5;
+          _context2.next = 4;
           return fetch(base + query);
-        case 5:
+        case 4:
           breedImage = _context2.sent;
-          _context2.next = 8;
+          _context2.next = 7;
           return breedImage.json();
-        case 8:
+        case 7:
           image = _context2.sent;
           return _context2.abrupt("return", image);
-        case 10:
+        case 9:
         case "end":
           return _context2.stop();
       }
     }, _callee2);
   }));
-  return function favourite() {
+  return function favourite(_x) {
     return _ref2.apply(this, arguments);
   };
 }();
-var image = favourite();
-console.log(image);
+// const image=favourite();
+// console.log(image);
+
 breedSelect.addEventListener('change', function (e) {
   e.target;
   console.log(e.target.value);
@@ -18254,7 +18251,7 @@ breedSelect.addEventListener('change', function (e) {
       if (b.name === e.target.value) {
         console.log(b.id);
         favourite(b.id).then(function (image) {
-          console.log(image[0].url);
+          console.log(image);
         });
       }
     });
@@ -18358,7 +18355,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63335" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54100" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -26,30 +26,35 @@ const initialLoad = async () => {
 
   const base = 'https://api.thecatapi.com/v1/breeds'
   const query = `?apikey=${key}`
+   
+    axios.get(base + query)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((error) => {
+      console.log(error);
+      
+    })
 
-  const response = await fetch(base + query);
-  const data = await response.json();
+    //  console.log(data);
 
-
-  //  console.log(data);
-
-
-  return data
+    return 
 }
 
-initialLoad().then(data => {
-  data.forEach(e => {
-    // console.log(e.name);
-    const option = document.createElement('option')
-    option.setAttribute('class', 'breedName')
-    option.textContent = e.name
-    breedSelect.appendChild(option)
-    //  console.log(option);
+initialLoad();
 
-  });
+// initialLoad().then(data => {
+//     data.forEach(e => {
+//         // console.log(e.name);
+//         const option = document.createElement('option')
+//         option.setAttribute('class', 'breedName')
+//         option.textContent = e.name
+//         breedSelect.appendChild(option)
+//         //  console.log(option);
 
-})
+//     });
 
+// })
 
 
 /**
@@ -69,44 +74,43 @@ initialLoad().then(data => {
 
 const favourite = async function (id) {
 
-  const base = 'https://api.thecatapi.com/v1/images/search?breed_ids';
-  const query = `${id}?api_key=$${key}`;
+    const base = 'https://api.thecatapi.com/v1/images/search?breed_ids';
+    const query = `${id}?api_key=$${key}`;
 
-  const breedImage = await fetch(base + query);
+    const breedImage = await fetch(base + query);
 
-  const image = await breedImage.json()
+    const image = await breedImage.json()
 
-  return image;
+    return image;
 
 }
 // const image=favourite();
 // console.log(image);
 
 breedSelect.addEventListener('change', e => {
-      e.target;
-      console.log(e.target.value);
-      initialLoad().then(data => {
-    
+    e.target;
+    console.log(e.target.value);
+    initialLoad().then(data => {
         data.forEach(b => {
-    
-          if (b.name === e.target.value) {
-            console.log(b.id);
-            favourite(b.id).then(image => {
-              console.log(image);
-    
-            })
-    
-          }
-    
+
+            if (b.name === e.target.value) {
+                console.log(b.id);
+                favourite(b.id).then(image => {
+                    console.log(image);
+
+                })
+
+            }
+
         })
 
-    
-      })
-    
-    });
+
+    })
+
+});
 
 
-    
+
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
  */
