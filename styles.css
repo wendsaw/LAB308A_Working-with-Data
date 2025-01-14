@@ -3,9 +3,9 @@ body {
   height: 100%;
 }
 
-body {
+/* body {
   background-color: lightgray;
-}
+} */
 
 .progress-bar-top {
   position: fixed;
