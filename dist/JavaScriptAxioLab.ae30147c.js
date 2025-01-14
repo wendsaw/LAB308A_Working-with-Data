@@ -18444,7 +18444,9 @@ breedSelect.addEventListener('change', function (e) {
       for (var i = 0; i < 66; i++) {
         if (response.data[i].name === e.target.value) {
           console.log(response.data[i].name);
-          console.log(response.data[i].id);
+          favourite(response.data[i].id).then(function (image) {
+            console.log(image);
+          });
         }
       }
     }).catch(function (error) {
@@ -18550,7 +18552,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64557" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60358" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -84,7 +84,9 @@ breedSelect.addEventListener('change', e => {
                 for (let i= 0; i < 66; i++) {
              if (response.data[i].name=== e.target.value) {
                  console.log(response.data[i].name);
-                 console.log(response.data[i].id);
+                 favourite(response.data[i].id).then(image => {
+                    console.log(image);
+                  })
                  }
                      }
                 
