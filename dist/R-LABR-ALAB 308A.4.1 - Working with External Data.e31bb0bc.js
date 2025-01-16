@@ -18191,11 +18191,10 @@ initialLoad().then(function (data) {
     var option = document.createElement('option');
     option.setAttribute('class', 'breedName');
     option.textContent = e.name;
+    option.value = e.id;
     breedSelect.appendChild(option);
-    //  console.log(option);
   });
 });
-
 /**
  * 2. Create an event handler for breedSelect that does the following:
  * - Retrieve information on the selected breed from the cat API using fetch().
@@ -18217,7 +18216,7 @@ var favourite = /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          base = 'https://api.thecatapi.com/v1/images/search?breed_ids';
+          base = 'https://api.thecatapi.com/v1/images/search?limit=10&breed_ids';
           query = "".concat(id, "?api_key=$").concat(key);
           _context2.next = 4;
           return fetch(base + query);
@@ -18238,23 +18237,42 @@ var favourite = /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }();
-// const image=favourite();
-// console.log(image);
-
-breedSelect.addEventListener('change', function (e) {
-  e.target;
-  console.log(e.target.value);
-  initialLoad().then(function (data) {
-    data.forEach(function (b) {
-      if (b.name === e.target.value) {
-        console.log(b.id);
-        favourite(b.id).then(function (image) {
-          console.log(image);
-        });
+breedSelect.addEventListener('change', /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
+    var breedId;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          e.target;
+          console.log(e.target.value);
+          breedId = e.target.value;
+          favourite(breedId).then(function (data) {
+            console.log(data);
+            data.forEach(function (item) {
+              var element = Carousel.createCarouselItem(item.url, item.id, item.id);
+              Carousel.appendCarousel(element);
+            });
+          });
+          Carousel.clear();
+          Carousel.start();
+          initialLoad().then(function (data) {
+            for (var i = 0; i < 66; i++) {
+              if (breedId == data[i].id) {
+                console.log(data[i]);
+                infoDump.innerHTML = "\n      <ul class=\"info\">\n      <li> Name:".concat(data[i].name, "</li>\n      <li>Origin:").concat(data[i].origin, "</li>\n      <li>Temperament:").concat(data[i].temperament, "</li>\n      <li>Weight:").concat(data[i].weight.metric, "kg</li>\n    </ul>\n      ");
+              }
+            }
+          });
+        case 7:
+        case "end":
+          return _context3.stop();
       }
-    });
-  });
-});
+    }, _callee3);
+  }));
+  return function (_x2) {
+    return _ref3.apply(this, arguments);
+  };
+}());
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
@@ -18280,7 +18298,7 @@ breedSelect.addEventListener('change', function (e) {
  * - The progressBar element has already been created for you.
  *  - You need only to modify its "width" style property to align with the request progress.
  * - In your request interceptor, set the width of the progressBar element to 0%.
- *  - This is to reset the progress with each request.
+ *  - This is to reset the progress with each request
  * - Research the axios onDownloadProgress config option.
  * - Create a function "updateProgress" that receives a ProgressEvent object.
  *  - Pass this function to the axios onDownloadProgress config option in your event handler.
@@ -18353,7 +18371,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57295" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52156" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -23,16 +23,12 @@ const key = `live_N544Y2FQYikguEIiktiqTdX3oL9S1xpjRkmWQfS4u3GqoqwCAHREgsZFJYFuL5
  */
 
 const initialLoad = async () => {
-
   const base = 'https://api.thecatapi.com/v1/breeds'
   const query = `?apikey=${key}`
-
   const response = await fetch(base + query);
   const data = await response.json();
 
-
   //  console.log(data);
-
 
   return data
 }
@@ -43,15 +39,10 @@ initialLoad().then(data => {
     const option = document.createElement('option')
     option.setAttribute('class', 'breedName')
     option.textContent = e.name
+    option.value = e.id
     breedSelect.appendChild(option)
-    //  console.log(option);
-
   });
-
 })
-
-
-
 /**
  * 2. Create an event handler for breedSelect that does the following:
  * - Retrieve information on the selected breed from the cat API using fetch().
@@ -68,45 +59,45 @@ initialLoad().then(data => {
  */
 
 const favourite = async function (id) {
-
-  const base = 'https://api.thecatapi.com/v1/images/search?breed_ids';
+  const base = 'https://api.thecatapi.com/v1/images/search?limit=10&breed_ids';
   const query = `${id}?api_key=$${key}`;
-
   const breedImage = await fetch(base + query);
-
   const image = await breedImage.json()
-
   return image;
-
 }
-// const image=favourite();
-// console.log(image);
 
-breedSelect.addEventListener('change', e => {
-      e.target;
-      console.log(e.target.value);
-      initialLoad().then(data => {
-    
-        data.forEach(b => {
-    
-          if (b.name === e.target.value) {
-            console.log(b.id);
-            favourite(b.id).then(image => {
-              console.log(image);
-    
-            })
-    
-          }
-    
-        })
+breedSelect.addEventListener('change', async (e) => {
+  e.target;
+  console.log(e.target.value);
+  let breedId = e.target.value
+  favourite(breedId).then(data => {
+    console.log(data);
+    data.forEach((item) => {
+      let element = Carousel.createCarouselItem(item.url, item.id, item.id)
+      Carousel.appendCarousel(element)
+    })
+  })
+  Carousel.clear()
+  Carousel.start()
+  initialLoad().then(data => {
+    for(let i=0; i<66; i++){
+    if (breedId == data[i].id) {
+      console.log(data[i]);
+      infoDump.innerHTML=`
+      <ul class="info">
+      <li> Name:${data[i].name}</li>
+      <li>Origin:${data[i].origin}</li>
+      <li>Temperament:${data[i].temperament}</li>
+      <li>Weight:${data[i].weight.metric}kg</li>
+    </ul>
+      `
+      
+    }}
+  })
+});
 
-    
-      })
-    
-    });
 
 
-    
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
  */
@@ -131,7 +122,7 @@ breedSelect.addEventListener('change', e => {
  * - The progressBar element has already been created for you.
  *  - You need only to modify its "width" style property to align with the request progress.
  * - In your request interceptor, set the width of the progressBar element to 0%.
- *  - This is to reset the progress with each request.
+ *  - This is to reset the progress with each request
  * - Research the axios onDownloadProgress config option.
  * - Create a function "updateProgress" that receives a ProgressEvent object.
  *  - Pass this function to the axios onDownloadProgress config option in your event handler.
