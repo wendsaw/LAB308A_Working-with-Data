@@ -18121,11 +18121,10 @@ initialLoad().then(function (data) {
     var option = document.createElement('option');
     option.setAttribute('class', 'breedName');
     option.textContent = e.name;
+    option.value = e.id;
     breedSelect.appendChild(option);
-    //  console.log(option);
   });
 });
-
 /**
  * 2. Create an event handler for breedSelect that does the following:
  * - Retrieve information on the selected breed from the cat API using fetch().
@@ -18147,7 +18146,7 @@ var favourite = /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          base = 'https://api.thecatapi.com/v1/images/search?breed_ids';
+          base = 'https://api.thecatapi.com/v1/images/search?limit=10&breed_ids';
           query = "".concat(id, "?api_key=$").concat(key);
           _context2.next = 4;
           return fetch(base + query);
@@ -18168,23 +18167,44 @@ var favourite = /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }();
-// const image=favourite();
-// console.log(image);
-
-breedSelect.addEventListener('change', function (e) {
-  e.target;
-  console.log(e.target.value);
-  initialLoad().then(function (data) {
-    data.forEach(function (b) {
-      if (b.name === e.target.value) {
-        console.log(b.id);
-        favourite(b.id).then(function (image) {
-          console.log(image);
-        });
+breedSelect.addEventListener('change', /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
+    var breedId;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          progressBar.innerHTML = "<h3>Download:Loading....</h3>\n  ";
+          e.target;
+          console.log(e.target.value);
+          breedId = e.target.value;
+          favourite(breedId).then(function (data) {
+            console.log(data);
+            data.forEach(function (item) {
+              var element = Carousel.createCarouselItem(item.url, item.id, item.id);
+              progressBar.innerHTML = "<h3>Download:complete<h3>\n  ";
+              Carousel.appendCarousel(element);
+            });
+          });
+          Carousel.clear();
+          Carousel.start();
+          initialLoad().then(function (data) {
+            for (var i = 0; i < 66; i++) {
+              if (breedId == data[i].id) {
+                console.log(data[i]);
+                infoDump.innerHTML = "\n      <ul class=\"info\">\n      <li> Name:".concat(data[i].name, "</li>\n      <li>Origin:").concat(data[i].origin, "</li>\n      <li>Temperament:").concat(data[i].temperament, "</li>\n      <li>Weight:").concat(data[i].weight.metric, "kg</li>\n    </ul>\n      ");
+              }
+            }
+          });
+        case 8:
+        case "end":
+          return _context3.stop();
       }
-    });
-  });
-});
+    }, _callee3);
+  }));
+  return function (_x2) {
+    return _ref3.apply(this, arguments);
+  };
+}());
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
@@ -18210,7 +18230,7 @@ breedSelect.addEventListener('change', function (e) {
  * - The progressBar element has already been created for you.
  *  - You need only to modify its "width" style property to align with the request progress.
  * - In your request interceptor, set the width of the progressBar element to 0%.
- *  - This is to reset the progress with each request.
+ *  - This is to reset the progress with each request
  * - Research the axios onDownloadProgress config option.
  * - Create a function "updateProgress" that receives a ProgressEvent object.
  *  - Pass this function to the axios onDownloadProgress config option in your event handler.
@@ -18281,8 +18301,6 @@ function createCarouselItem(imgSrc, imgAlt, imgId) {
   img.alt = imgAlt;
   var favBtn = clone.querySelector(".favourite-button");
   favBtn.addEventListener("click", function (e) {
-    e.target;
-    console.log('hello');
     (0, _index.favourite)(imgId);
   });
   return clone;
@@ -18375,7 +18393,6 @@ var initialLoad = /*#__PURE__*/function () {
           }).catch(function (error) {
             console.log(error);
           });
-
           //  console.log(data);
           return _context.abrupt("return");
         case 2:
@@ -18407,22 +18424,15 @@ initialLoad();
 
 var favourite = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(id) {
-    var base, query, breedImage, image;
+    var base, query;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          base = 'https://api.thecatapi.com/v1/images/search?breed_ids';
+          base = 'https://api.thecatapi.com/v1/images/search?limit=10&breed_ids';
           query = "".concat(id, "?api_key=$").concat(key);
-          _context2.next = 4;
-          return fetch(base + query);
+          axios.get(base + query);
+          return _context2.abrupt("return");
         case 4:
-          breedImage = _context2.sent;
-          _context2.next = 7;
-          return breedImage.json();
-        case 7:
-          image = _context2.sent;
-          return _context2.abrupt("return", image);
-        case 9:
         case "end":
           return _context2.stop();
       }
@@ -18435,25 +18445,63 @@ var favourite = /*#__PURE__*/function () {
 // const image=favourite();
 // console.log(image);
 
-breedSelect.addEventListener('change', function (e) {
-  e.target;
-  console.log(e.target.value);
-  initialLoad().then(function (response) {
-    axios.get(base + query).then(function (response) {
-      for (var i = 0; i < 66; i++) {
-        if (response.data[i].name == e.target.value) {
-          console.log(response.data[i].name);
+breedSelect.addEventListener('change', /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee3(e) {
+    var breedId, base, query;
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
+        case 0:
+          progressBar.innerHTML = "<h3>Download:Loading....</h3>";
+          e.target;
           console.log(e.target.value);
-          favourite(response.data[i].id).then(function (image) {
-            console.log(image);
+          breedId = e.target.value;
+          base = "https://api.thecatapi.com/v1/images/search?limit=10&";
+          query = "".concat(breedId, "?api_key=$").concat(key);
+          axios.get(base + query).then(function (data) {
+            console.log(data);
+            // for(let i=0; i<9; i++){
+            //     let element = Carousel.createCarouselItem(data[i].url, data[i].id, data[i].id)
+            //     progressBar.innerHTML = `<li></li>Download:complete</li>`
+            //     Carousel.appendCarousel(element)
+            // }
+            // data.forEach((item) => {
+            //     let element = Carousel.createCarouselItem(item.url, item.id, item.id)
+            //     progressBar.innerHTML = `<li></li>Download:complete</li>`
+            //     Carousel.appendCarousel(element)
+            // })
           });
-        }
+          Carousel.clear();
+          Carousel.start();
+          axios.get(base + query).then(function (response) {
+            for (var i = 0; i < 66; i++) {
+              if (breedId == data[i].id) {
+                console.log(data[i]);
+                infoDump.innerHTML = "\n          <ul class=\"info\">\n          <li> Name:".concat(data[i].name, "</li>\n          <li>Origin:").concat(data[i].origin, "</li>\n          <li>Temperament:").concat(data[i].temperament, "</li>\n          <li>Weight:").concat(data[i].weight.metric, "kg</li>\n        </ul>\n          ");
+              }
+            }
+          }).catch(function (error) {
+            // console.log(error)
+          });
+        case 10:
+        case "end":
+          return _context3.stop();
       }
-    }).catch(function (error) {
-      console.log(error);
-    });
-  });
-});
+    }, _callee3);
+  }));
+  return function (_x2) {
+    return _ref3.apply(this, arguments);
+  };
+}());
+axios.interceptors.request.use(function (request) {
+  request.time = {
+    startTime: new Date()
+  };
+  return request;
+}, axios.interceptors.response.use(function (response) {
+  response.config.time.endTime = new Date();
+  response.duration = response.config.time.endTime - response.config.time.startTime;
+  //console.log(response.duration);
+}));
 
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
@@ -18552,7 +18600,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51235" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55226" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

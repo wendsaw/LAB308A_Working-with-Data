@@ -3,9 +3,9 @@ body {
   height: 100%;
 }
 
-/* body {
+body {
   background-color: lightgray;
-} */
+}
 
 .progress-bar-top {
   position: fixed;
@@ -72,12 +72,14 @@ body {
 .card img {
   max-height: 100%;
 }
-@media (max-width: 767px) {
+@media  (max-width: 767px) {
   .card .img-wrapper {
     height: 17em;
   }
 }
-
+#progressBar {
+  color: red;
+}
 
 
 /*# sourceMappingURL=/styles.8986bff4.css.map */

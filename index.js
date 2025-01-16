@@ -67,6 +67,9 @@ const favourite = async function (id) {
 }
 
 breedSelect.addEventListener('change', async (e) => {
+  progressBar.innerHTML=`<h3>Download:Loading....</h3>
+  `
+
   e.target;
   console.log(e.target.value);
   let breedId = e.target.value
@@ -74,9 +77,12 @@ breedSelect.addEventListener('change', async (e) => {
     console.log(data);
     data.forEach((item) => {
       let element = Carousel.createCarouselItem(item.url, item.id, item.id)
+      progressBar.innerHTML=`<h3>Download:complete<h3>
+  `
       Carousel.appendCarousel(element)
     })
   })
+  
   Carousel.clear()
   Carousel.start()
   initialLoad().then(data => {
@@ -91,7 +97,6 @@ breedSelect.addEventListener('change', async (e) => {
       <li>Weight:${data[i].weight.metric}kg</li>
     </ul>
       `
-      
     }}
   })
 });

@@ -24,18 +24,14 @@ const key = `live_N544Y2FQYikguEIiktiqTdX3oL9S1xpjRkmWQfS4u3GqoqwCAHREgsZFJYFuL5
 const base = 'https://api.thecatapi.com/v1/breeds'
 const query = `?apikey=${key}`
 const initialLoad = async () => {
-
     axios.get(base + query)
         .then((response) => {
             console.log(response)
         })
         .catch((error) => {
             console.log(error)
-
         })
-
     //  console.log(data);
-
     return
 }
 
@@ -57,46 +53,69 @@ initialLoad();
  */
 
 const favourite = async function (id) {
-
-    const base = 'https://api.thecatapi.com/v1/images/search?breed_ids';
+    const base = 'https://api.thecatapi.com/v1/images/search?limit=10&breed_ids';
     const query = `${id}?api_key=$${key}`;
-    const breedImage = await fetch(base + query);
-    const image = await breedImage.json()
-    return image;
 
+    axios.get(base + query)
+
+    return;
 }
 // const image=favourite();
 // console.log(image);
 
-breedSelect.addEventListener('change', e => {
+breedSelect.addEventListener('change', async (e) => {
+    progressBar.innerHTML = `<h3>Download:Loading....</h3>`
     e.target;
     console.log(e.target.value);
-
-    initialLoad().then(response => {
-        
-        axios.get(base + query)
-            .then((response) => {
-                for (let i= 0; i < 66; i++) {
-             if (response.data[i].name==e.target.value) {
-                 console.log(response.data[i].name);
-                 console.log(e.target.value);
-
-                 favourite(response.data[i].id).then(image => {
-                    console.log(image);
-                  })
-                 }
-                     }
-                
-            })
-            .catch((error) => {
-                console.log(error);
-
-            })
-        
-
+    let breedId = e.target.value
+    const base =`https://api.thecatapi.com/v1/images/search?limit=10&`;
+    const query = `${breedId}?api_key=$${key}`;
+    axios.get(base + query).then(data => {
+        console.log(data);
+        // for(let i=0; i<9; i++){
+        //     let element = Carousel.createCarouselItem(data[i].url, data[i].id, data[i].id)
+        //     progressBar.innerHTML = `<li></li>Download:complete</li>`
+        //     Carousel.appendCarousel(element)
+        // }
+        // data.forEach((item) => {
+        //     let element = Carousel.createCarouselItem(item.url, item.id, item.id)
+        //     progressBar.innerHTML = `<li></li>Download:complete</li>`
+        //     Carousel.appendCarousel(element)
+        // })
     })
-
+    Carousel.clear()
+    Carousel.start()
+    axios.get(base + query)
+        .then((response) => {
+            for (let i = 0; i < 66; i++) {
+                if (breedId == data[i].id) {
+                    console.log(data[i]);
+                    infoDump.innerHTML = `
+          <ul class="info">
+          <li> Name:${data[i].name}</li>
+          <li>Origin:${data[i].origin}</li>
+          <li>Temperament:${data[i].temperament}</li>
+          <li>Weight:${data[i].weight.metric}kg</li>
+        </ul>
+          `
+                }
+       } 
+        })
+        .catch((error) => {
+        // console.log(error)
+        })
+    
 });
+axios.interceptors.request.use(function (request) {
+    request.time = { startTime: new Date() };
+    return request;
+},
+
+    axios.interceptors.response.use(function (response) {
+        response.config.time.endTime = new Date();
+        response.duration = response.config.time.endTime - response.config.time.startTime;
+        //console.log(response.duration);
+    }));
 
 
 /**

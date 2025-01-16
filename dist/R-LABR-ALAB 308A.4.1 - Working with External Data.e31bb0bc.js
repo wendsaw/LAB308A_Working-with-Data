@@ -18243,6 +18243,7 @@ breedSelect.addEventListener('change', /*#__PURE__*/function () {
     return _regeneratorRuntime().wrap(function _callee3$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
+          progressBar.innerHTML = "<h3>Download:Loading....</h3>\n  ";
           e.target;
           console.log(e.target.value);
           breedId = e.target.value;
@@ -18250,6 +18251,7 @@ breedSelect.addEventListener('change', /*#__PURE__*/function () {
             console.log(data);
             data.forEach(function (item) {
               var element = Carousel.createCarouselItem(item.url, item.id, item.id);
+              progressBar.innerHTML = "<h3>Download:complete<h3>\n  ";
               Carousel.appendCarousel(element);
             });
           });
@@ -18263,7 +18265,7 @@ breedSelect.addEventListener('change', /*#__PURE__*/function () {
               }
             }
           });
-        case 7:
+        case 8:
         case "end":
           return _context3.stop();
       }
@@ -18371,7 +18373,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52156" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55226" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
