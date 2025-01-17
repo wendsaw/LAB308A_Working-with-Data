@@ -18251,12 +18251,13 @@ breedSelect.addEventListener('change', /*#__PURE__*/function () {
             console.log(data);
             data.forEach(function (item) {
               var element = Carousel.createCarouselItem(item.url, item.id, item.id);
-              progressBar.innerHTML = "<h3>Download:complete<h3>\n  ";
+              progressBar.innerHTML = "<h3>Download:complete<h3>";
               Carousel.appendCarousel(element);
+              Carousel.start();
             });
           });
-          Carousel.clear();
-          Carousel.start();
+          // Carousel.clear()
+
           initialLoad().then(function (data) {
             for (var i = 0; i < 66; i++) {
               if (breedId == data[i].id) {
@@ -18265,7 +18266,7 @@ breedSelect.addEventListener('change', /*#__PURE__*/function () {
               }
             }
           });
-        case 8:
+        case 6:
         case "end":
           return _context3.stop();
       }
@@ -18373,7 +18374,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55226" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59070" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -77,14 +77,15 @@ breedSelect.addEventListener('change', async (e) => {
     console.log(data);
     data.forEach((item) => {
       let element = Carousel.createCarouselItem(item.url, item.id, item.id)
-      progressBar.innerHTML=`<h3>Download:complete<h3>
-  `
+      progressBar.innerHTML=`<h3>Download:complete<h3>`
       Carousel.appendCarousel(element)
+      Carousel.start()
     })
+    
   })
+  // Carousel.clear()
   
-  Carousel.clear()
-  Carousel.start()
+  
   initialLoad().then(data => {
     for(let i=0; i<66; i++){
     if (breedId == data[i].id) {
