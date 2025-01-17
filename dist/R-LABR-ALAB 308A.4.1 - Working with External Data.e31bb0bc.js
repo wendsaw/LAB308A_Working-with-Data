@@ -18256,8 +18256,7 @@ breedSelect.addEventListener('change', /*#__PURE__*/function () {
               Carousel.start();
             });
           });
-          // Carousel.clear()
-
+          Carousel.clear();
           initialLoad().then(function (data) {
             for (var i = 0; i < 66; i++) {
               if (breedId == data[i].id) {
@@ -18266,7 +18265,7 @@ breedSelect.addEventListener('change', /*#__PURE__*/function () {
               }
             }
           });
-        case 6:
+        case 7:
         case "end":
           return _context3.stop();
       }
@@ -18374,7 +18373,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59070" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59249" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -1,6 +1,6 @@
 import * as Carousel from "./Carousel.js";
 // import axios from "axios";
-const { data } = require("jquery");
+const {data } = require("jquery");
 // The breed selection input element.
 const breedSelect = document.querySelector("#breedSelect");
 // The information section div element.
@@ -80,10 +80,11 @@ breedSelect.addEventListener('change', async (e) => {
       progressBar.innerHTML=`<h3>Download:complete<h3>`
       Carousel.appendCarousel(element)
       Carousel.start()
+      
     })
     
   })
-  // Carousel.clear()
+  Carousel.clear()
   
   
   initialLoad().then(data => {
